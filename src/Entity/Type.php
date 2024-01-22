@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorysRepository;
+use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: CategorysRepository::class)]
-class Categorys
+#[ORM\Entity(repositoryClass: TypeRepository::class)]
+class Type
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,9 +19,9 @@ class Categorys
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
     #[Assert\Length(min:2,max:50)]
-    private ?string $cat_name = null;
+    private ?string $type_name = null;
 
-    #[ORM\OneToMany(mappedBy: 'categoryid', targetEntity: Property::class)]
+    #[ORM\OneToMany(mappedBy: 'typeid', targetEntity: Property::class)]
     private Collection $properties;
 
     public function __construct()
@@ -34,14 +34,14 @@ class Categorys
         return $this->id;
     }
 
-    public function getCatName(): ?string
+    public function getTypeName(): ?string
     {
-        return $this->cat_name;
+        return $this->type_name;
     }
 
-    public function setCatName(string $cat_name): static
+    public function setTypeName(string $type_name): static
     {
-        $this->cat_name = $cat_name;
+        $this->type_name = $type_name;
 
         return $this;
     }
@@ -58,7 +58,7 @@ class Categorys
     {
         if (!$this->properties->contains($property)) {
             $this->properties->add($property);
-            $property->setCategoryid($this);
+            $property->setTypeid($this);
         }
 
         return $this;
@@ -68,8 +68,8 @@ class Categorys
     {
         if ($this->properties->removeElement($property)) {
             // set the owning side to null (unless already changed)
-            if ($property->getCategoryid() === $this) {
-                $property->setCategoryid(null);
+            if ($property->getTypeid() === $this) {
+                $property->setTypeid(null);
             }
         }
 
