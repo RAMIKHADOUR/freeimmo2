@@ -103,10 +103,6 @@ class Property
     public function __construct()
     {
         $this->installationid = new ArrayCollection();
-        $this->locationid = new ArrayCollection();
-        $this->typeid = new ArrayCollection();
-        $this->categoryid = new ArrayCollection();
-        $this->annonceid = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
          $this->updatedAt = new DateTimeImmutable();
     }
